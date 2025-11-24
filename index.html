@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大明会典 - 明朝历史文化数字博物馆</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="veer-317088222.jpg" rel="stylesheet">
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary-red: #c53c2c;
+            --gold: #d4af37;
+            --dark-black: #222222;
+            --porcelain-blue: #3a5e7a;
+            --rice-color: #f4f1e6;
+            --paper-yellow: #f8f4e9;
+        }
+        
+        body {
+            font-family: 'Noto Serif SC', serif;
+            background-color: var(--paper-yellow);
+            color: var(--dark-black);
+            line-height: 1.6;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect fill="none" stroke="%23c53c2c" stroke-width="2" x="2" y="2" width="96" height="96" rx="5" ry="5"/></svg>');
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* 导航栏样式 */
+        header {
+            background: linear-gradient(to bottom, var(--primary-red), #a82a1c);
+            color: white;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            font-size: 2rem;
+            margin-left: 10px;
+            text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            border: 2px solid white;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 25px;
+            position: relative;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 5px 0;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--gold);
+            transition: width 0.3s;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* 轮播图样式 - 已调整 */
+        .carousel {
+            height: 500px;
+            position: relative;
+            margin: 20px 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .carousel-inner {
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            color: white;
+            position: relative;
+        }
+        
+        .carousel-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('veer-317088222.jpg');
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+        }
+        
+        .carousel-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .carousel-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .carousel-content p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--gold);
+            color: var(--dark-black);
+            padding: 12px 25px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #e5c04d;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* 时间轴样式 */
+        .timeline-section {
+            margin: 50px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--primary-red);
+            display: inline-block;
+            padding: 0 20px;
+            background-color: var(--paper-yellow);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: var(--primary-red);
+            z-index: 0;
+        }
+        
+        .timeline {
+            display: flex;
+            overflow-x: auto;
+            padding: 20px 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-red) var(--paper-yellow);
+        }
+        
+        .timeline-item {
+            flex: 0 0 auto;
+            width: 250px;
+            margin-right: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-img {
+            height: 150px;
+            background-color: var(--porcelain-blue);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .timeline-content {
+            padding: 15px;
+        }
+        
+        .timeline-content h3 {
+            color: var(--primary-red);
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .timeline-content p {
+            color: var(--dark-black);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .timeline-link {
+            display: inline-block;
+            color: var(--porcelain-blue);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        
+        .timeline-link:hover {
+            color: var(--primary-red);
+            text-decoration: underline;
+        }
+        
+        /* 内容区块样式 */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-img {
+            height: 180px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .feature-content {
+            padding: 20px;
+        }
+        
+        .feature-content h3 {
+            color: var(--primary-red);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .feature-content p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        /* 快速访问区样式 */
+        .quick-access {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .access-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .access-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .access-icon {
+            font-size: 2.5rem;
+            color: var(--primary-red);
+            margin-bottom: 15px;
+        }
+        
+        .access-item h3 {
+            margin-bottom: 10px;
+            color: var(--dark-black);
+        }
+        
+        .access-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        /* 论坛热帖样式 */
+        .forum-section {
+            background: linear-gradient(135deg, var(--porcelain-blue), #2a4865);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 40px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .forum-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .forum-section h2:before {
+            content: '💬';
+            margin-right: 10px;
+        }
+        
+        .forum-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .forum-post {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+        }
+        
+        .forum-post h3 {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .post-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-top: 10px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            border-radius: 15px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .video-container video {
+            width: 100%;
+            display: block;
+            border: none;
+        }
+        
+        .video-placeholder {
+            background: linear-gradient(135deg, #1a6fc3 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 15px;
+        }
+        
+        .video-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: var(--dark-black);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            margin-bottom: 10px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: var(--gold);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav li {
+                margin: 5px 10px;
+            }
+            
+            .carousel {
+                height: 400px;
+            }
+            
+            .carousel-content h2 {
+                font-size: 2rem;
+            }
+            
+            .carousel-content p {
+                font-size: 1rem;
+            }
+            
+            .features, .quick-access, .forum-posts {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .carousel {
+                height: 300px;
+            }
+            
+            .carousel-content {
+                padding: 20px;
+            }
+            
+            .carousel-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .carousel-content p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">明</div>
+                <h1>大明会典</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="明朝.html" class="nav-link"><i class="fas fa-home"></i> 首页</a></li>
+                    <li><a href="王朝兴衰.html" class="nav-link"><i class="fas fa-crown"></i> 王朝兴衰</a></li>
+                    <li><a href="文华典章.html" class="nav-link"><i class="fas fa-paint-brush"></i> 文华典章</a></li>
+                    <li><a href="世情百态.html" class="nav-link"><i class="fas fa-users"></i> 世情百态</a></li>
+                    <li><a href="互动探索.html" class="nav-link"><i class="fas fa-gamepad"></i> 互动探索</a></li>
+                    <li><a href="明朝文创.html" class="nav-link">明朝文创</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="container">
+        <!-- 轮播图 - 已调整 -->
+        <section class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-background"></div>
+                <div class="carousel-content">
+                    <h2>探索大明王朝的辉煌历史</h2>
+                    <p>从洪武建国到崇祯殉国，深入解读276年明朝兴衰历程，体验中华文明璀璨一页。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 时间轴 -->
+        <section class="timeline-section">
+            <div class="section-title">
+                <h2>大明王朝历史节点</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('R-C.jpg');"></div>
+                    <div class="timeline-content">
+                        <h3>洪武之治</h3>
+                        <p>1368-1398年，明太祖朱元璋开创的治世，奠定明朝基业。</p>
+                        <a href="洪武.html" class="timeline-link">探索洪武时期 &rarr;</a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('f46e22dbaef94f94ab6fb2a5ad661da1.jpeg');"></div>
+                    <div class="timeline-content">
+                        <h3>永乐盛世</h3>
+                        <p>1402-1424年，明成祖朱棣时期，国力强盛，郑和下西洋。</p>
+                        <a href="永乐.html" class="timeline-link">探索永乐时期 &rarr;</a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('27C1403CCDD5A77C86361A7C2EFCB6F252FC794E_size21_w500_h307.jpeg');"></div>
+                    <div class="timeline-content">
+                        <h3>仁宣之治</h3>
+                        <p>1424-1435年，明仁宗、明宣宗时期，国力强盛，文化繁荣。</p>
+                        <a href="仁宣.html" class="timeline-link">探索仁宣时期 &rarr;</a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('OIP-C.webp');"></div>
+                    <div class="timeline-content">
+                        <h3>土木堡之变</h3>
+                        <p>1449年，明英宗被瓦剌俘虏，明朝由盛转衰的转折点。</p>
+                        <a href="土木堡.html" class="timeline-link">了解土木堡之变 &rarr;</a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('OIP-C (1).webp');"></div>
+                    <div class="timeline-content">
+                        <h3>张居正改革</h3>
+                        <p>1573-1582年，万历年间张居正推行的一系列改革措施。</p>
+                        <a href="张居正.html" class="timeline-link">了解张居正改革 &rarr;</a>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-img" style="background-image: url('d258b7344bbbed64f6aca7a62ff19e62.png');"></div>
+                    <div class="timeline-content">
+                        <h3>明末危机</h3>
+                        <p>1620-1644年，明朝内外交困，最终被李自成起义军灭亡。</p>
+                        <a href="明末.html" class="timeline-link">了解明朝灭亡 &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特色内容 -->
+       <section>
+            <div class="section-title">
+                <h2>探索大明风华</h2>
+            </div>
+            <div class="features">
+                <div class="feature-card">
+                   <div class="feature-img" style="background-image: url('R-C (1).jpg');"></div>
+                    <div class="feature-content">
+                        <h3>郑和下西洋</h3>
+                        <p>探索15世纪世界最庞大的航海壮举，了解明代海上丝绸之路的辉煌。</p>
+                        <a href="郑和.html" class="btn">了解更多</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img" style="background-image: url('116855268c1b4d1694ef5fdc4a24e55e.jpg');"></div>
+                    <div class="feature-content">
+                        <h3>明代瓷器艺术</h3>
+                        <p>欣赏青花、五彩、斗彩等明代瓷器精品，感受东方美学巅峰。</p>
+                        <a href="瓷器.html" class="btn">了解更多</a>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-img" style="background-image: url('s630ec2c831366.jpg');"></div>
+                    <div class="feature-content">
+                        <h3>紫禁城建筑群</h3>
+                        <p>虚拟游览明代北京紫禁城，了解中国古代建筑艺术的杰出代表。</p>
+                        <a href="紫禁城.html" class="btn">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 快速访问入口 -->
+        <section class="timeline-section">
+            <div class="section-title">
+                <h2>快速访问入口</h2>
+            </div>
+            <div class="quick-access">
+                <a href="虚拟.html" class="access-item">
+                    <div class="access-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>虚拟博物馆</h3>
+                    <p>3D全景体验明代宫殿与文物珍宝</p>
+                </a>
+                <a href="知识库.html" class="access-item">
+                    <div class="access-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>明史知识库</h3>
+                    <p>权威史料与研究成果一站式查阅</p>
+                </a>
+                <a href="影视.html" class="access-item">
+                    <div class="access-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3>明朝影视作品</h3>
+                    <p>深入了解明朝</p>
+                </a>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2><i class="fas fa-film"></i> 视频</h2>
+            <div class="video-container">
+                <video controls poster="">
+                    <source src="87ad823965c60bc8331454d3c68444b3.mp4" type="video/mp4">
+                </video>
+            </div>
+            <p class="video-note" style="margin-top: 15px; font-style: italic; color: #777;"></p>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>大明会典是一个致力于传播明朝历史文化的数字博物馆，旨在提供权威、生动、沉浸式的明史学习体验。</p>
+                </div>
+               
+                <div class="footer-section">
+                    <h3>合作伙伴</h3>
+                    <a href="明史学会.html" target="_blank">中国明史学会</a>
+                    <a href="故宫博物院.html" target="_blank">故宫博物院</a>
+                    <a href="图书馆.html" target="_blank">国家图书馆</a>
+                    <a href="历史研究院.html" target="_blank">中国历史研究院</a>
+                    <a href="个人简介.html" target="_blank">请联系我</a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 大明会典 - 明朝历史文化数字博物馆。保留所有权利。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 页面加载时恢复滚动位置
+        document.addEventListener('DOMContentLoaded', function() {
+            // 从localStorage获取保存的滚动位置
+            const savedScrollPosition = localStorage.getItem('scrollPosition');
+            
+            if (savedScrollPosition) {
+                // 延迟滚动以确保页面完全加载
+                setTimeout(() => {
+                    window.scrollTo(0, parseInt(savedScrollPosition));
+                    // 清除保存的位置，避免下次加载时再次滚动
+                    localStorage.removeItem('scrollPosition');
+                }, 100);
+            }
+            
+            // 为所有导航链接添加点击事件监听器
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    // 保存当前滚动位置
+                    localStorage.setItem('scrollPosition', window.pageYOffset);
+                });
+            });
+            
+            // 为所有内部链接添加点击事件监听器
+            document.querySelectorAll('a[href^="#"], a[href*=".html"]').forEach(link => {
+                // 排除外部链接
+                if (!link.href.startsWith('http') || link.href.includes(window.location.hostname)) {
+                    link.addEventListener('click', function(e) {
+                        // 保存当前滚动位置
+                        localStorage.setItem('scrollPosition', window.pageYOffset);
+                    });
+                }
+            });
+            
+            // 时间轴拖拽功能
+            const timeline = document.querySelector('.timeline');
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            timeline.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - timeline.offsetLeft;
+                scrollLeft = timeline.scrollLeft;
+                timeline.style.cursor = 'grabbing';
+            });
+            
+            timeline.addEventListener('mouseleave', () => {
+                isDown = false;
+                timeline.style.cursor = 'grab';
+            });
+            
+            timeline.addEventListener('mouseup', () => {
+                isDown = false;
+                timeline.style.cursor = 'grab';
+            });
+            
+            timeline.addEventListener('mousemove', (e) => {
+                if(!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - timeline.offsetLeft;
+                const walk = (x - startX) * 2;
+                timeline.scrollLeft = scrollLeft - walk;
+            });
+
+            // 触摸设备支持
+            timeline.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].pageX - timeline.offsetLeft;
+                scrollLeft = timeline.scrollLeft;
+            }, { passive: true });
+            
+            timeline.addEventListener('touchmove', (e) => {
+                if(e.touches.length != 1) return;
+                const x = e.touches[0].pageX - timeline.offsetLeft;
+                const walk = (x - startX) * 2;
+                timeline.scrollLeft = scrollLeft - walk;
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
